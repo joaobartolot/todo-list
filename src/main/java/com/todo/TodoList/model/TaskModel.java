@@ -15,6 +15,16 @@ public class TaskModel {
         return title;
     }
 
+    public TaskModel(int id, String title, String description, boolean done, Date creationDate, Date updateDate, String owner) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.done = done;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
+        this.owner = owner;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }

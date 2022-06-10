@@ -7,7 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TodoListApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TodoListApplication.class, args);
+		try {
+			SpringApplication.run(TodoListApplication.class, args);
+		} catch(Throwable ex) {
+			ex.printStackTrace();
+		}
 	}
 
 }
