@@ -11,6 +11,21 @@ public class TaskDTO {
     private Date updateDate;
     private String owner;
 
+    public TaskDTO(){
+
+    }
+
+    public TaskDTO(int id, String title, String description, boolean done, Date creationDate, Date updateDate, String owner) {
+        super();
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.done = done;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
+        this.owner = owner;
+    }
+
     public String getTitle() {
         return title;
     }

@@ -1,25 +1,43 @@
 package com.todo.TodoList.dao;
 
 import java.util.*;
-import com.todo.TodoList.*;
+
 import com.todo.TodoList.model.*;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TaskDao {
 
-    ArrayList<TaskModel> database = new ArrayList<TaskModel>();
-    public TaskDao(){
-        TaskModel taskmodelDemo = new TaskModel(12,"testTitle","desc",false,new Date(), new Date(), "patrick");
-        database.add(taskmodelDemo);
+    public ArrayList<TaskModel> database = new ArrayList<TaskModel>();
+
+    public TaskModel findById(int id){
+        return database
+                .stream()
+                .filter(taskModel -> taskModel.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
-    public TaskModel findOne(){
-        TaskModel task = database.get(0);
-        System.out.println(task);
-        return task;
+    public void create(String title, String description, String owner) {
+        TaskModel model = new TaskModel(
+                this.getMaxId() + 1,
+                title,
+                description,
+                false,
+                new Date(),
+                new Date(),
+                owner
+        );
+
+        database.add(model);
     }
 
+    public int getMaxId() {
+        if (database.isEmpty())
+            return 0;
 
+        TaskModel task = database.stream().max(Comparator.comparing(TaskModel::getId)).get();
 
+        return task.getId();
+    }
 }

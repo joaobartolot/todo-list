@@ -1,24 +1,40 @@
 package com.todo.TodoList.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.todo.TodoList.service.*;
 import com.todo.TodoList.dto.*;
 
 @RestController
+@RequestMapping("/task")
 public class TaskController {
 
-    private final TaskService taskService;
+    private final TaskService service;
 
     @Autowired
     public TaskController(TaskService taskService){
-        this.taskService = taskService;
+        this.service = taskService;
     }
 
-    @GetMapping("/task")
-    public TaskDTO task() {
-        return taskService.findOneTask();
+    @PostMapping("/")
+    public ResponseEntity createTask(@RequestBody TaskRequestDTO taskRequestDTO) {
+        service.createTask(taskRequestDTO);
+
+        return ResponseEntity
+                .status(202)
+                .body(null);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<TaskDTO> getTask(@PathVariable int id) {
+        TaskDTO taskDTO = service.findTaskById(id);
+
+        if (taskDTO == null)
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        return ResponseEntity
+                .ok(taskDTO);
     }
 }
