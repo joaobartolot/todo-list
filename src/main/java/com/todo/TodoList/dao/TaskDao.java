@@ -1,7 +1,13 @@
 package com.todo.TodoList.dao;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
+import com.google.firebase.cloud.FirestoreClient;
 import com.todo.TodoList.model.*;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +16,32 @@ public class TaskDao {
 
     public ArrayList<TaskModel> database = new ArrayList<TaskModel>();
 
-    public TaskModel findById(int id){
+    public static final String COLLECTION_NAME="task";
+
+    private final Firestore dbFirestore = FirestoreClient.getFirestore();
+
+    public TaskModel createfb(String title, String description, String owner) throws ExecutionException, InterruptedException {
+        TaskModel model = new TaskModel(
+                title,
+                description,
+                false,
+                new Date(),
+                new Date(),
+                owner
+        );
+
+        DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).add(model).get();
+
+        model.setId(documentReference.getId());
+
+        ApiFuture<DocumentSnapshot> future = documentReference.get();
+
+
+
+        return future.get().toObject(TaskModel.class);
+    }
+
+    public TaskModel findById(String id){
         return database
                 .stream()
                 .filter(taskModel -> taskModel.getId() == id)
@@ -20,7 +51,6 @@ public class TaskDao {
 
     public void create(String title, String description, String owner) {
         TaskModel model = new TaskModel(
-                this.getMaxId() + 1,
                 title,
                 description,
                 false,
@@ -32,12 +62,8 @@ public class TaskDao {
         database.add(model);
     }
 
-    public int getMaxId() {
-        if (database.isEmpty())
-            return 0;
+    public void update(TaskModel taskModel) {
 
-        TaskModel task = database.stream().max(Comparator.comparing(TaskModel::getId)).get();
 
-        return task.getId();
     }
 }

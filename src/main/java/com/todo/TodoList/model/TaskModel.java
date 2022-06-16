@@ -1,9 +1,12 @@
 package com.todo.TodoList.model;
 
+import com.google.cloud.firestore.annotation.DocumentId;
+
 import java.util.Date;
 
 public class TaskModel {
-    private int id;
+    @DocumentId
+    private String id;
     private String title;
     private String description;
     private boolean done;
@@ -11,11 +14,10 @@ public class TaskModel {
     private Date updateDate;
     private String owner;
 
-    public String getTitle() {
-        return title;
+    public TaskModel() {
     }
 
-    public TaskModel(int id, String title, String description, boolean done, Date creationDate, Date updateDate, String owner) {
+    public TaskModel(String id, String title, String description, boolean done, Date creationDate, Date updateDate, String owner) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -23,6 +25,19 @@ public class TaskModel {
         this.creationDate = creationDate;
         this.updateDate = updateDate;
         this.owner = owner;
+    }
+
+    public TaskModel(String title, String description, boolean done, Date creationDate, Date updateDate, String owner) {
+        this.title = title;
+        this.description = description;
+        this.done = done;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
+        this.owner = owner;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public void setTitle(String title) {
@@ -69,11 +84,11 @@ public class TaskModel {
         this.owner = owner;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

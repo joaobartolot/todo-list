@@ -21,7 +21,7 @@ public class TaskService {
 
     }
 
-    public TaskDTO findTaskById(int id){
+    public TaskDTO findTaskById(String id){
         TaskModel task = this.taskDao.findById(id);
         TaskDTO taskDTO = this.modelMapper.map(task, TaskDTO.class);
         return taskDTO;
