@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.concurrent.ExecutionException;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class TaskServiceTest {
@@ -23,7 +25,7 @@ public class TaskServiceTest {
     private TaskDao dao;
 
     @Ignore
-    public void shouldCreateATask() {
+    public void shouldCreateATask() throws ExecutionException, InterruptedException {
         final TaskRequestDTO taskRequestDTO = Mockito.mock(TaskRequestDTO.class);
 
         service.createTask(taskRequestDTO);

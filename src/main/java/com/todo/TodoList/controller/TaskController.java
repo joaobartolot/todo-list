@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.todo.TodoList.service.*;
 import com.todo.TodoList.dto.*;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @RequestMapping("/task")
 public class TaskController {
@@ -25,7 +27,7 @@ public class TaskController {
             @ApiResponse(responseCode = "202", description = "Task created successfully"),
             @ApiResponse(responseCode = "400", description = "Body was sent null")
     })
-    public ResponseEntity createTask(@RequestBody TaskRequestDTO taskRequestDTO) {
+    public ResponseEntity createTask(@RequestBody TaskRequestDTO taskRequestDTO) throws ExecutionException, InterruptedException {
         if (taskRequestDTO == null)
             return ResponseEntity
                     .status(400)
@@ -39,7 +41,7 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaskDTO> getTask(@PathVariable String id) {
+    public ResponseEntity<TaskDTO> getTask(@PathVariable String id) throws ExecutionException, InterruptedException {
         TaskDTO taskDTO = service.findTaskById(id);
 
         if (taskDTO == null)

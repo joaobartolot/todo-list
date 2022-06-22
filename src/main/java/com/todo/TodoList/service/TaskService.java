@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class TaskService {
@@ -21,13 +22,16 @@ public class TaskService {
 
     }
 
-    public TaskDTO findTaskById(String id){
+    public TaskDTO findTaskById(String id) throws ExecutionException, InterruptedException {
         TaskModel task = this.taskDao.findById(id);
         TaskDTO taskDTO = this.modelMapper.map(task, TaskDTO.class);
         return taskDTO;
     }
 
-    public void createTask(TaskRequestDTO taskRequestDTO) {
-        this.taskDao.create(taskRequestDTO.getTitle(), taskRequestDTO.getDescription(), taskRequestDTO.getOwner());
+    public TaskDTO createTask(TaskRequestDTO taskRequestDTO) throws ExecutionException, InterruptedException {
+        TaskModel task = this.taskDao.create(taskRequestDTO.getTitle(), taskRequestDTO.getDescription(), taskRequestDTO.getOwner());
+        TaskDTO taskDTO = this.modelMapper.map(task, TaskDTO.class);
+
+        return taskDTO;
     }
 }
