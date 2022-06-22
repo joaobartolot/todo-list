@@ -3,7 +3,7 @@ package com.todo.TodoList.dto;
 import java.util.Date;
 
 public class TaskDTO {
-    private int id;
+    private String id;
     private String title;
     private String description;
     private boolean done;
@@ -15,7 +15,7 @@ public class TaskDTO {
 
     }
 
-    public TaskDTO(int id, String title, String description, boolean done, Date creationDate, Date updateDate, String owner) {
+    public TaskDTO(String id, String title, String description, boolean done, Date creationDate, Date updateDate, String owner) {
         super();
         this.id = id;
         this.title = title;
@@ -74,11 +74,11 @@ public class TaskDTO {
         this.owner = owner;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

@@ -17,7 +17,7 @@ public class TaskDao {
 
     public ArrayList<TaskModel> database = new ArrayList<TaskModel>();
 
-    public static final String COLLECTION_NAME="task";
+    public static final String COLLECTION_NAME = "task";
 
     private final Firestore dbFirestore = FirestoreClient.getFirestore();
 
@@ -45,7 +45,6 @@ public class TaskDao {
     }
 
     public void update(TaskModel taskModel) {
-
 
     }
 }

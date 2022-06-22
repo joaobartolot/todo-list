@@ -27,17 +27,17 @@ public class TaskController {
             @ApiResponse(responseCode = "202", description = "Task created successfully"),
             @ApiResponse(responseCode = "400", description = "Body was sent null")
     })
-    public ResponseEntity createTask(@RequestBody TaskRequestDTO taskRequestDTO) throws ExecutionException, InterruptedException {
+    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskRequestDTO taskRequestDTO) throws ExecutionException, InterruptedException {
         if (taskRequestDTO == null)
             return ResponseEntity
                     .status(400)
                     .body(null);
 
-        service.createTask(taskRequestDTO);
+        TaskDTO task = service.createTask(taskRequestDTO);
 
         return ResponseEntity
                 .status(202)
-                .body(null);
+                .body(task);
     }
 
     @GetMapping("/{id}")
