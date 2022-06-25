@@ -1,21 +1,42 @@
 package com.todo.TodoList.model;
 
+import com.google.cloud.firestore.annotation.DocumentId;
+
 import java.util.Date;
 import java.util.List;
 
 
 public class ProjectModel {
-    public int id;
-    public String name;
-    public Date creationDate;
-    public Date updateDate;
-    public List<TaskModel> tasks;
+    @DocumentId
+    private String id;
+    private String name;
+    private Date creationDate;
+    private Date updateDate;
 
-    public int getId() {
+    public ProjectModel() {
+    }
+
+
+    public ProjectModel(String id, String name, Date creationDate, Date updateDate) {
+        this.id = id;
+        this.name = name;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
+    }
+
+
+
+    public ProjectModel( String name, Date creationDate, Date updateDate) {
+        this.name = name;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -43,11 +64,4 @@ public class ProjectModel {
         this.updateDate = updateDate;
     }
 
-    public List<TaskModel> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<TaskModel> tasks) {
-        this.tasks = tasks;
-    }
 }

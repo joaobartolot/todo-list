@@ -6,17 +6,17 @@ import java.util.Date;
 import java.util.List;
 
 public class ProjectDTO {
-    public int id;
+    public String id;
     public String name;
     public Date creationDate;
     public Date updateDate;
-    public List<TaskModel> tasks;
+    public List<TaskDTO> tasks;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -44,11 +44,11 @@ public class ProjectDTO {
         this.updateDate = updateDate;
     }
 
-    public List<TaskModel> getTasks() {
+    public List<TaskDTO> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<TaskModel> tasks) {
+    public void setTasks(List<TaskDTO> tasks) {
         this.tasks = tasks;
     }
 }

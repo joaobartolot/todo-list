@@ -42,6 +42,17 @@ public class TaskDao {
         return future.get().toObject(TaskModel.class);
     }
 
+    public ArrayList<TaskModel> findByProjectId(String id) throws ExecutionException, InterruptedException {
+        ArrayList<TaskModel> taskList = new ArrayList<TaskModel>();
+        CollectionReference collectionReference = dbFirestore.collection(COLLECTION_NAME);
+        ApiFuture<QuerySnapshot> future = collectionReference.whereEqualTo("projectId", id).get();
+        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+        for (DocumentSnapshot document : documents) {
+            taskList.add(document.toObject(TaskModel.class));
+        }
+        return taskList;
+    }
+
 
     public TaskModel update(TaskModel taskModel) throws ExecutionException, InterruptedException  {
 
