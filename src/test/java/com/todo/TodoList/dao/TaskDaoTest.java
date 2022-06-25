@@ -28,8 +28,9 @@ public class TaskDaoTest {
         final String title = "Some title";
         final String description = "Some description";
         final String owner = "Some owner";
+        final String projectId = "Some projectId";
 
-        TaskModel taskModel = dao.create(title, description, owner);
+        TaskModel taskModel = dao.create(title, description, owner, projectId);
 
         Assertions.assertNotNull(taskModel);
         Assertions.assertNotNull(taskModel.getId());
@@ -43,8 +44,10 @@ public class TaskDaoTest {
         final String title = "Some title";
         final String description = "Some description";
         final String owner = "Some owner";
+        final String projectId = "Some projectId";
 
-        final TaskModel expected = dao.create(title, description, owner);
+
+        final TaskModel expected = dao.create(title, description, owner, projectId);
 
         TaskModel taskModel = dao.findById(expected.getId());
 

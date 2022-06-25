@@ -10,12 +10,12 @@ public class TaskDTO {
     private Date creationDate;
     private Date updateDate;
     private String owner;
-
+    private String projectId;
     public TaskDTO(){
 
     }
 
-    public TaskDTO(String id, String title, String description, boolean done, Date creationDate, Date updateDate, String owner) {
+    public TaskDTO(String id, String title, String description, boolean done, Date creationDate, Date updateDate, String owner, String projectId) {
         super();
         this.id = id;
         this.title = title;
@@ -24,6 +24,7 @@ public class TaskDTO {
         this.creationDate = creationDate;
         this.updateDate = updateDate;
         this.owner = owner;
+        this.projectId = projectId;
     }
 
     public String getTitle() {
@@ -81,4 +82,8 @@ public class TaskDTO {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getProjectId() { return projectId;  }
+
+    public void setProjectId(String projectId) { this.projectId = projectId; }
 }

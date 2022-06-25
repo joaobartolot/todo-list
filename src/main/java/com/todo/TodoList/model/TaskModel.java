@@ -13,11 +13,12 @@ public class TaskModel {
     private Date creationDate;
     private Date updateDate;
     private String owner;
+    private String projectId;
 
     public TaskModel() {
     }
 
-    public TaskModel(String id, String title, String description, boolean done, Date creationDate, Date updateDate, String owner) {
+    public TaskModel(String id, String title, String description, boolean done, Date creationDate, Date updateDate, String owner, String projectId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -25,15 +26,30 @@ public class TaskModel {
         this.creationDate = creationDate;
         this.updateDate = updateDate;
         this.owner = owner;
+        this.projectId = projectId;
     }
 
-    public TaskModel(String title, String description, boolean done, Date creationDate, Date updateDate, String owner) {
+    public TaskModel(String title, String description, boolean done, Date creationDate, Date updateDate, String owner, String projectId) {
         this.title = title;
         this.description = description;
         this.done = done;
         this.creationDate = creationDate;
         this.updateDate = updateDate;
         this.owner = owner;
+        this.projectId = projectId;
+    }
+
+    public TaskModel updateWith(String title, String description, Boolean done, String owner) {
+        return new TaskModel(
+                this.id,
+                title!= null && title.length() > 0 ?  title : this.title,
+                description != null && description.length() > 0 ? description : this.description,
+                done != null ? done : this.done,
+                this.getCreationDate(),
+                new Date(),
+                owner != null && owner.length() > 0 ? owner : this.owner,
+                this.projectId
+        );
     }
 
     public String getTitle() {
@@ -91,4 +107,8 @@ public class TaskModel {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getProjectId() { return projectId;  }
+
+    public void setProjectId(String projectId) { this.projectId = projectId;  }
 }

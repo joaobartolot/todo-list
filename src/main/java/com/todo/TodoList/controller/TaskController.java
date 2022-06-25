@@ -51,4 +51,35 @@ public class TaskController {
         return ResponseEntity
                 .ok(taskDTO);
     }
+    
+    @PutMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Task updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Body was sent null")
+    })
+    public ResponseEntity<TaskDTO> updateTask(@PathVariable(value = "id") String id, @RequestBody TaskRequestDTO taskRequestDTO) throws ExecutionException, InterruptedException {
+
+        if (taskRequestDTO == null)
+            return ResponseEntity
+                    .status(400)
+                    .body(null);
+        TaskDTO taskDTO =  service.updateTask(id,taskRequestDTO);
+        return ResponseEntity
+                .status(200)
+                .body(null);
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Task updated successfully")
+    })
+    public ResponseEntity<TaskDTO> deleteTask(@PathVariable(value = "id") String id) throws ExecutionException, InterruptedException {
+
+
+        service.deleteTask(id);
+        return ResponseEntity
+                .status(204)
+                .body(null);
+    }
+
 }
