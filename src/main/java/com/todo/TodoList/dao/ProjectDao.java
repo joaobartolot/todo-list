@@ -13,21 +13,11 @@ import java.util.concurrent.ExecutionException;
 
 @Component
 public class ProjectDao {
-
-    public ArrayList<TaskModel> database = new ArrayList<TaskModel>();
-
     public static final String COLLECTION_NAME = "project";
 
     private final Firestore dbFirestore = FirestoreClient.getFirestore();
 
-    public ProjectModel create(String name) throws ExecutionException, InterruptedException {
-
-        ProjectModel model = new ProjectModel(
-                name,
-                new Date(),
-                new Date()
-        );
-
+    public ProjectModel create(ProjectModel model) throws ExecutionException, InterruptedException {
         DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).add(model).get();
         ApiFuture<DocumentSnapshot> future = documentReference.get();
         return future.get().toObject(ProjectModel.class);
@@ -36,6 +26,20 @@ public class ProjectDao {
     public ProjectModel findById(String id) throws ExecutionException, InterruptedException {
         DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(id);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
+
+        System.out.println();
+
         return future.get().toObject(ProjectModel.class);
     }
+
+    public ProjectModel update(ProjectModel projectModel) throws ExecutionException, InterruptedException  {
+        DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(projectModel.getId());
+        documentReference.set(projectModel).get();
+
+        ApiFuture<DocumentSnapshot> snapshot = documentReference.get();
+
+        return snapshot.get().toObject(ProjectModel.class);
+    }
+
+
 }

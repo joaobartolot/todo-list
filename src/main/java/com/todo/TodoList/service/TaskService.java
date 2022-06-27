@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -17,9 +18,9 @@ public class TaskService {
     TaskDao taskDao;
 
     @Autowired
-    public TaskService(ModelMapper modelMapper,TaskDao taskDao){
+    public TaskService(ModelMapper modelMapper, TaskDao taskDao){
         this.modelMapper = modelMapper;
-         this.taskDao = taskDao;
+        this.taskDao = taskDao;
 
     }
 
@@ -39,7 +40,18 @@ public class TaskService {
     }
 
     public TaskDTO createTask(TaskRequestDTO taskRequestDTO) throws ExecutionException, InterruptedException {
-        TaskModel task = this.taskDao.create(taskRequestDTO.getTitle(), taskRequestDTO.getDescription(), taskRequestDTO.getOwner(), taskRequestDTO.getProjectId());
+
+        TaskModel model = new TaskModel(
+                taskRequestDTO.getTitle(),
+                taskRequestDTO.getDescription(),
+                false,
+                new Date(),
+                new Date(),
+                taskRequestDTO.getOwner(),
+                taskRequestDTO.getProjectId()
+        );
+
+        TaskModel task = this.taskDao.create(model);
         TaskDTO taskDTO = this.modelMapper.map(task, TaskDTO.class);
         System.out.println(taskDTO.getProjectId());
         return taskDTO;

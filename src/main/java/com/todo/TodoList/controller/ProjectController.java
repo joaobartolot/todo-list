@@ -56,4 +56,22 @@ public class ProjectController {
     }
 
 
+    @PutMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Task updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Body was sent null")
+    })
+    public ResponseEntity<ProjectDTO> updateTask(@PathVariable(value = "id") String id, @RequestBody ProjectRequestDTO projectRequestDTO) throws ExecutionException, InterruptedException {
+
+        if (projectRequestDTO == null)
+            return ResponseEntity
+                    .status(400)
+                    .body(null);
+
+        ProjectDTO projectDTO =  service.updateProject(id, projectRequestDTO);
+
+        return ResponseEntity
+                .status(200)
+                .body(projectDTO);
+    }
 }

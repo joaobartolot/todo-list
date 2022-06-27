@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,13 +31,24 @@ public class TaskDaoTest {
         final String owner = "Some owner";
         final String projectId = "Some projectId";
 
-        TaskModel taskModel = dao.create(title, description, owner, projectId);
+        final TaskModel model = new TaskModel(
+                title,
+                description,
+                false,
+                new Date(),
+                new Date(),
+                owner,
+                projectId
+        );
+
+
+        TaskModel taskModel = dao.create(model);
 
         Assertions.assertNotNull(taskModel);
         Assertions.assertNotNull(taskModel.getId());
         Assertions.assertEquals(title, taskModel.getTitle());
         Assertions.assertEquals(description, taskModel.getDescription());
-        Assertions.assertEquals(owner, taskModel.getOwner() );
+        Assertions.assertEquals(owner, taskModel.getOwner());
     }
 
     @Test
@@ -46,8 +58,18 @@ public class TaskDaoTest {
         final String owner = "Some owner";
         final String projectId = "Some projectId";
 
+        final TaskModel model = new TaskModel(
+                title,
+                description,
+                false,
+                new Date(),
+                new Date(),
+                owner,
+                projectId
+        );
 
-        final TaskModel expected = dao.create(title, description, owner, projectId);
+
+        TaskModel expected = dao.create(model);
 
         TaskModel taskModel = dao.findById(expected.getId());
 

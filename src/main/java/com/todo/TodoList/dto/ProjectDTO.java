@@ -6,11 +6,14 @@ import java.util.Date;
 import java.util.List;
 
 public class ProjectDTO {
-    public String id;
-    public String name;
-    public Date creationDate;
-    public Date updateDate;
-    public List<TaskDTO> tasks;
+    private String id;
+    private String name;
+    private Date creationDate;
+    private Date updateDate;
+    private List<TaskDTO> tasks;
+
+    public ProjectDTO() {
+    }
 
     public String getId() {
         return id;

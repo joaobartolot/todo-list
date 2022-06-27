@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ProjectRequestDTO {
-    public String name;
+    private String name;
 
     public String getName() {
         return name;

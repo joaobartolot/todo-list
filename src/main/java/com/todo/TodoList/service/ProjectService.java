@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -22,10 +23,10 @@ public class ProjectService {
     TaskService taskService;
 
     @Autowired
-    public ProjectService(ModelMapper modelMapper, ProjectDao projectDao, TaskService taskService){
+    public ProjectService(ModelMapper modelMapper, ProjectDao projectDao, TaskService taskService) {
         this.modelMapper = modelMapper;
-         this.projectDao = projectDao;
-         this.taskService = taskService;
+        this.projectDao = projectDao;
+        this.taskService = taskService;
     }
 
     public ProjectDTO findProjectById(String id) throws ExecutionException, InterruptedException {
@@ -37,9 +38,34 @@ public class ProjectService {
     }
 
     public ProjectDTO createProject(ProjectRequestDTO projectRequestDTO) throws ExecutionException, InterruptedException {
-        ProjectModel project = this.projectDao.create(projectRequestDTO.getName());
+        ProjectModel model = new ProjectModel(
+                projectRequestDTO.getName(),
+                new Date(),
+                new Date()
+        );
+
+        ProjectModel project = this.projectDao.create(model);
         ProjectDTO projectDTO = this.modelMapper.map(project, ProjectDTO.class);
         return projectDTO;
     }
 
+    public ProjectDTO updateProject(String id, ProjectRequestDTO projectRequestDTO) throws ExecutionException, InterruptedException {
+
+        ProjectModel project = projectDao.findById(id.trim());
+
+        System.out.println(isNullOrEmpty(projectRequestDTO.getName()));
+        if (!isNullOrEmpty(projectRequestDTO.getName())) {
+            project.setName(projectRequestDTO.getName());
+            project.setUpdateDate(new Date());
+
+            project = this.projectDao.update(project);
+        }
+
+        ProjectDTO projectDTO = this.modelMapper.map(project, ProjectDTO.class);
+        return projectDTO;
+    }
+
+    private boolean isNullOrEmpty(String string) {
+        return string == null  || string.isEmpty() || string.trim().isEmpty();
+    }
 }
