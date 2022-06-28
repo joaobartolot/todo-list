@@ -50,10 +50,8 @@ public class ProjectService {
     }
 
     public ProjectDTO updateProject(String id, ProjectRequestDTO projectRequestDTO) throws ExecutionException, InterruptedException {
-
         ProjectModel project = projectDao.findById(id.trim());
 
-        System.out.println(isNullOrEmpty(projectRequestDTO.getName()));
         if (!isNullOrEmpty(projectRequestDTO.getName())) {
             project.setName(projectRequestDTO.getName());
             project.setUpdateDate(new Date());
@@ -66,7 +64,8 @@ public class ProjectService {
     }
 
     public void deleteProject(String id) throws ExecutionException, InterruptedException {
-        projectDao.delete(id);
+        projectDao.delete(id.trim());
+        taskService.deleteTaskByProjectId(id.trim());
     }
 
     private boolean isNullOrEmpty(String string) {

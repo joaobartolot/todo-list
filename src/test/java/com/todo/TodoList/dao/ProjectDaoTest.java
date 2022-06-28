@@ -31,7 +31,7 @@ public class ProjectDaoTest {
 
     @Test
     public void shouldDeleteProject() throws ExecutionException, InterruptedException {
-        final String projectId = "79rovX5tQdADGP57Iy1v";
+        final String projectId = "Some projectId";
 
         dao.delete(projectId);
 

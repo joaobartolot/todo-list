@@ -17,10 +17,6 @@ public class FBInitialize {
             FileInputStream serviceAccount =
                     new FileInputStream("todo-list-bc3ad-firebase-adminsdk-zliph-2a7c1de0f2.json");
 
-            System.out.println(">>>>>>>>>>>> BUILDING FIREBASE");
-
-            System.out.println(serviceAccount.toString());
-
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();

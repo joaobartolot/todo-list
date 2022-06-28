@@ -54,4 +54,16 @@ public class TaskDao {
         DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(id);
         documentReference.delete().get();
     }
+
+    public void deleteByProjectId(String id) throws ExecutionException, InterruptedException {
+        ArrayList<TaskModel> taskList = new ArrayList<>();
+        CollectionReference collectionReference = dbFirestore.collection(COLLECTION_NAME);
+        ApiFuture<QuerySnapshot> future = collectionReference.whereEqualTo("projectId", id).get();
+        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+        for (DocumentSnapshot document : documents) {
+            DocumentReference documentReference = document.getReference();
+            documentReference.delete().get();
+        }
+
+    }
 }
