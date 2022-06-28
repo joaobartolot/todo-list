@@ -19,6 +19,7 @@ public class FBInitialize {
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setProjectId("todo-list-bc3ad")
                     .build();
 
             FirebaseApp.initializeApp(options);
