@@ -78,6 +78,5 @@ public class TaskService {
         if(taskFromBd != null) {
             taskDao.delete(id);
         }
-        return;
     }
 }

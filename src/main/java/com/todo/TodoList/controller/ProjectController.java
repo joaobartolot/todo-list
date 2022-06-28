@@ -58,7 +58,7 @@ public class ProjectController {
 
     @PutMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Task updated successfully"),
+            @ApiResponse(responseCode = "200", description = "Project updated successfully"),
             @ApiResponse(responseCode = "400", description = "Body was sent null")
     })
     public ResponseEntity<ProjectDTO> updateTask(@PathVariable(value = "id") String id, @RequestBody ProjectRequestDTO projectRequestDTO) throws ExecutionException, InterruptedException {
@@ -73,5 +73,17 @@ public class ProjectController {
         return ResponseEntity
                 .status(200)
                 .body(projectDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Project updated successfully")
+    })
+    public ResponseEntity<Void> deleteTask(@PathVariable(value = "id") String id) throws ExecutionException, InterruptedException {
+        service.deleteProject(id);
+
+        return ResponseEntity
+                .status(204)
+                .body(null);
     }
 }

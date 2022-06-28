@@ -65,6 +65,10 @@ public class ProjectService {
         return projectDTO;
     }
 
+    public void deleteProject(String id) throws ExecutionException, InterruptedException {
+        projectDao.delete(id);
+    }
+
     private boolean isNullOrEmpty(String string) {
         return string == null  || string.isEmpty() || string.trim().isEmpty();
     }

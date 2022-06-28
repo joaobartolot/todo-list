@@ -28,4 +28,13 @@ public class ProjectDaoTest {
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(expected.getName(), actual.getName());
     }
+
+    @Test
+    public void shouldDeleteProject() throws ExecutionException, InterruptedException {
+        final String projectId = "79rovX5tQdADGP57Iy1v";
+
+        dao.delete(projectId);
+
+        Assertions.assertNull(dao.findById(projectId));
+    }
 }

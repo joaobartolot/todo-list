@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 @Component
 public class ProjectDao {
@@ -27,8 +28,6 @@ public class ProjectDao {
         DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(id);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
 
-        System.out.println();
-
         return future.get().toObject(ProjectModel.class);
     }
 
@@ -41,5 +40,8 @@ public class ProjectDao {
         return snapshot.get().toObject(ProjectModel.class);
     }
 
-
+    public void delete(String id) throws ExecutionException, InterruptedException {
+        DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(id);
+        documentReference.delete().get();
+    }
 }

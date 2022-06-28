@@ -74,9 +74,8 @@ public class TaskController {
             @ApiResponse(responseCode = "204", description = "Task updated successfully")
     })
     public ResponseEntity<TaskDTO> deleteTask(@PathVariable(value = "id") String id) throws ExecutionException, InterruptedException {
-
-
         service.deleteTask(id);
+
         return ResponseEntity
                 .status(204)
                 .body(null);

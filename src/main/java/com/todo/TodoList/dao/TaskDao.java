@@ -50,10 +50,8 @@ public class TaskDao {
         return snapshot.get().toObject(TaskModel.class);
     }
 
-    public void delete(String id)  {
+    public void delete(String id) throws ExecutionException, InterruptedException {
         DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(id);
-        documentReference.delete();
-
-        return;
+        documentReference.delete().get();
     }
 }
