@@ -27,7 +27,10 @@ public class TaskController {
     @PostMapping("/")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Task created successfully"),
-            @ApiResponse(responseCode = "400", description = "Body was sent null")
+            @ApiResponse(responseCode = "400", description = "Body was sent null",
+                    content = {@Content(
+                            schema = @Schema()
+                    )})
     })
     public ResponseEntity<TaskDTO> createTask(@RequestBody TaskRequestDTO taskRequestDTO) throws ExecutionException, InterruptedException {
         if (taskRequestDTO == null)
