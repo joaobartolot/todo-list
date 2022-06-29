@@ -6,6 +6,8 @@ import com.todo.TodoList.dto.TaskDTO;
 import com.todo.TodoList.dto.TaskRequestDTO;
 import com.todo.TodoList.service.ProjectService;
 import com.todo.TodoList.service.TaskService;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,10 @@ public class ProjectController {
     @PostMapping("/")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Project created successfully"),
-            @ApiResponse(responseCode = "400", description = "Body was sent null")
+            @ApiResponse(responseCode = "400", description = "Body was sent null",
+                    content = {@Content(
+                            schema = @Schema()
+                    )})
     })
     public ResponseEntity<ProjectDTO> createProject(@RequestBody ProjectRequestDTO projectRequestDTO) throws ExecutionException, InterruptedException {
         if (projectRequestDTO == null)
@@ -46,7 +51,10 @@ public class ProjectController {
     @GetMapping("/{id}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Project found"),
-            @ApiResponse(responseCode = "404", description = "Project not found")
+            @ApiResponse(responseCode = "404", description = "Project not found",
+                    content = {@Content(
+                            schema = @Schema()
+                    )})
     })
     public ResponseEntity<ProjectDTO> getProject(@PathVariable String id) throws ExecutionException, InterruptedException {
         ProjectDTO project = service.findProjectById(id);
@@ -63,7 +71,10 @@ public class ProjectController {
     @PutMapping("/{id}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Project updated successfully"),
-            @ApiResponse(responseCode = "400", description = "Body was sent null")
+            @ApiResponse(responseCode = "400", description = "Body was sent null",
+                    content = {@Content(
+                            schema = @Schema()
+                    )})
     })
     public ResponseEntity<ProjectDTO> updateTask(@PathVariable(value = "id") String id, @RequestBody ProjectRequestDTO projectRequestDTO) throws ExecutionException, InterruptedException {
 
@@ -81,7 +92,10 @@ public class ProjectController {
 
     @DeleteMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Project deleted successfully")
+            @ApiResponse(responseCode = "204", description = "Project deleted successfully",
+                    content = {@Content(
+                            schema = @Schema()
+                    )})
     })
     public ResponseEntity<Void> deleteTask(@PathVariable(value = "id") String id) throws ExecutionException, InterruptedException {
         service.deleteProject(id);

@@ -1,5 +1,7 @@
 package com.todo.TodoList.controller;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ public class TaskController {
     private final TaskService service;
 
     @Autowired
-    public TaskController(TaskService taskService){
+    public TaskController(TaskService taskService) {
         this.service = taskService;
     }
 
@@ -43,23 +45,32 @@ public class TaskController {
     @GetMapping("/{id}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Task found"),
-            @ApiResponse(responseCode = "404", description = "Task not found")
+            @ApiResponse(responseCode = "404", description = "Task not found",
+                    content = {@Content(
+                            schema = @Schema()
+                    )})
     })
     public ResponseEntity<TaskDTO> getTask(@PathVariable String id) throws ExecutionException, InterruptedException {
-            TaskDTO taskDTO = service.findTaskById(id);
+        TaskDTO taskDTO = service.findTaskById(id);
 
-            if (taskDTO == null)
-                return ResponseEntity
-                        .notFound()
-                        .build();
+        if (taskDTO == null)
             return ResponseEntity
-                    .ok(taskDTO);
+                    .notFound()
+                    .build();
+        return ResponseEntity
+                .ok(taskDTO);
     }
-    
+
     @PutMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Task updated successfully"),
-            @ApiResponse(responseCode = "400", description = "Body was sent null")
+            @ApiResponse(responseCode = "204", description = "Task updated successfully",
+                    content = {@Content(
+                            schema = @Schema()
+                    )}),
+            @ApiResponse(responseCode = "400", description = "Body was sent null",
+                    content = {@Content(
+                            schema = @Schema()
+                    )})
     })
     public ResponseEntity<TaskDTO> updateTask(@PathVariable(value = "id") String id, @RequestBody TaskRequestDTO taskRequestDTO) throws ExecutionException, InterruptedException {
 
@@ -67,7 +78,7 @@ public class TaskController {
             return ResponseEntity
                     .status(400)
                     .body(null);
-        TaskDTO taskDTO =  service.updateTask(id,taskRequestDTO);
+        TaskDTO taskDTO = service.updateTask(id, taskRequestDTO);
         return ResponseEntity
                 .status(204)
                 .body(null);
@@ -75,7 +86,10 @@ public class TaskController {
 
     @DeleteMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Task deleted successfully")
+            @ApiResponse(responseCode = "204", description = "Task deleted successfully",
+                    content = {@Content(
+                            schema = @Schema()
+                    )})
     })
     public ResponseEntity<TaskDTO> deleteTask(@PathVariable(value = "id") String id) throws ExecutionException, InterruptedException {
         service.deleteTask(id);
