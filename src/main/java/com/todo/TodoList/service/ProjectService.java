@@ -31,6 +31,8 @@ public class ProjectService {
 
     public ProjectDTO findProjectById(String id) throws ExecutionException, InterruptedException {
         ProjectModel project = this.projectDao.findById(id);
+        if (project == null)
+            return null;
         ArrayList<TaskDTO> taskList = taskService.findTaskByProjectId(project.getId());
         ProjectDTO projectDTO = this.modelMapper.map(project, ProjectDTO.class);
         projectDTO.setTasks(taskList);

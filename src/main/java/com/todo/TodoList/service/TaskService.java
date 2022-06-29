@@ -25,7 +25,11 @@ public class TaskService {
 
     public TaskDTO findTaskById(String id) throws ExecutionException, InterruptedException {
         TaskModel task = this.dao.findById(id);
+        if (task == null)
+            return null;
+
         TaskDTO taskDTO = this.modelMapper.map(task, TaskDTO.class);
+
         return taskDTO;
     }
 

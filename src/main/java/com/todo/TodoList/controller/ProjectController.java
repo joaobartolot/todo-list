@@ -27,7 +27,7 @@ public class ProjectController {
 
     @PostMapping("/")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "202", description = "Task created successfully"),
+            @ApiResponse(responseCode = "201", description = "Project created successfully"),
             @ApiResponse(responseCode = "400", description = "Body was sent null")
     })
     public ResponseEntity<ProjectDTO> createProject(@RequestBody ProjectRequestDTO projectRequestDTO) throws ExecutionException, InterruptedException {
@@ -39,11 +39,15 @@ public class ProjectController {
         ProjectDTO project = service.createProject(projectRequestDTO);
 
         return ResponseEntity
-                .status(202)
+                .status(201)
                 .body(project);
     }
 
     @GetMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Project found"),
+            @ApiResponse(responseCode = "404", description = "Project not found")
+    })
     public ResponseEntity<ProjectDTO> getProject(@PathVariable String id) throws ExecutionException, InterruptedException {
         ProjectDTO project = service.findProjectById(id);
 
@@ -77,7 +81,7 @@ public class ProjectController {
 
     @DeleteMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Project updated successfully")
+            @ApiResponse(responseCode = "204", description = "Project deleted successfully")
     })
     public ResponseEntity<Void> deleteTask(@PathVariable(value = "id") String id) throws ExecutionException, InterruptedException {
         service.deleteProject(id);
